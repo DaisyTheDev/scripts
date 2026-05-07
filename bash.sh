@@ -4,7 +4,7 @@ if [ -f "./bash.tar.zst" ]; then
   exit
 fi
 
-rm -rfd ./bash-inst
+rm -rf ./bash-inst
 mkdir -p ./bash-inst
 mkdir -p ./bash-inst/usr/bin
 mkdir -p ./bash-inst/usr/sbin
@@ -34,3 +34,5 @@ rm -f ./lib64
 sudo rm -rf ./usr/share/info
 sudo find . -type d -empty -delete
 tar pmcfv - . | zstd -22 --ultra > ../bash.tar.zst
+cd ..
+sudo rm -rf bash-inst

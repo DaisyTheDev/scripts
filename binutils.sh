@@ -4,7 +4,7 @@ if [ -f "./binutils.tar.zst" ]; then
   exit
 fi
 
-rm -rfd ./binutils-inst
+rm -rf ./binutils-inst
 mkdir -p ./binutils-inst
 mkdir -p ./binutils-inst/usr/bin
 mkdir -p ./binutils-inst/usr/sbin
@@ -37,3 +37,5 @@ rm -f ./lib32
 rm -f ./lib64
 sudo find . -type d -empty -delete
 tar pmcfv - . | zstd -22 --ultra > ../binutils.tar.zst
+cd ..
+sudo rm -rf binutils-inst

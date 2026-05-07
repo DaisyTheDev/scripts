@@ -4,7 +4,7 @@ if [ -f "./coreutils.tar.zst" ]; then
   exit
 fi
 
-rm -rfd ./coreutils-inst
+rm -rf ./coreutils-inst
 mkdir -p ./coreutils-inst
 mkdir -p ./coreutils-inst/usr/bin
 mkdir -p ./coreutils-inst/usr/sbin
@@ -31,3 +31,5 @@ rm -f ./lib32
 rm -f ./lib64
 sudo find . -type d -empty -delete
 tar pmcfv - . | zstd -22 --ultra > ../coreutils.tar.zst
+cd ..
+sudo rm -rf coreutils-inst

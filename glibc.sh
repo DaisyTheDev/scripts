@@ -4,7 +4,7 @@ if [ -f "./glibc.tar.zst" ]; then
   exit
 fi
 
-rm -rfd ./glibc-inst
+rm -rf ./glibc-inst
 mkdir -p ./glibc-inst
 mkdir -p ./glibc-inst/usr/bin
 mkdir -p ./glibc-inst/usr/sbin
@@ -38,3 +38,5 @@ rm -f ./lib64
 sudo rm -rf ./usr/share/info
 sudo find . -type d -empty -delete
 tar pmcfv - . | zstd -22 --ultra > ../glibc.tar.zst
+cd ..
+sudo rm -rf glibc-inst

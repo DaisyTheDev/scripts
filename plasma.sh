@@ -4,7 +4,7 @@ if [ -f "./plasma.tar.zst" ]; then
   exit
 fi
 
-rm -rfd ./plasma-inst
+rm -rf ./plasma-inst
 mkdir -p ./plasma-inst
 mkdir -p ./plasma-inst/usr/bin
 mkdir -p ./plasma-inst/usr/sbin
@@ -42,3 +42,5 @@ rm -f ./lib32
 rm -f ./lib64
 sudo find . -type d -empty -delete
 tar pmcfv - . | zstd -22 --ultra > ../plasma.tar.zst
+cd ..
+sudo rm -rf plasma-inst

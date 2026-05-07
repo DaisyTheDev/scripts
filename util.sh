@@ -4,7 +4,7 @@ if [ -f "./util.tar.zst" ]; then
   exit
 fi
 
-rm -rfd ./util-inst
+rm -rf ./util-inst
 mkdir -p ./util-inst
 mkdir -p ./util-inst/usr/bin
 mkdir -p ./util-inst/usr/sbin
@@ -34,3 +34,5 @@ rm -f ./lib32
 rm -f ./lib64
 sudo find . -type d -empty -delete
 tar pmcfv - . | zstd -22 --ultra > ../util.tar.zst
+cd ..
+sudo rm -rf util-inst

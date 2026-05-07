@@ -4,7 +4,7 @@ if [ -f "./llvm.tar.zst" ]; then
   exit
 fi
 
-rm -rfd ./llvm-inst
+rm -rf ./llvm-inst
 mkdir -p ./llvm-inst
 mkdir -p ./llvm-inst/usr/bin
 mkdir -p ./llvm-inst/usr/sbin
@@ -43,7 +43,7 @@ if [ ! -f ".stage1_done" ]; then
   sudo cmake --build . --target install
 
   cd ..
-  rm -rfd build
+  rm -rf build
   touch .stage1_done
 fi
 
@@ -85,3 +85,5 @@ rm -f ./lib32
 rm -f ./lib64
 sudo find . -type d -empty -delete
 tar pmcfv - . | zstd -22 --ultra > ../llvm.tar.zst
+cd ..
+sudo rm -rf llvm-inst

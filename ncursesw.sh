@@ -4,7 +4,7 @@ if [ -f "./ncursesw.tar.zst" ]; then
   exit
 fi
 
-rm -rfd ./ncurses-inst
+rm -rf ./ncurses-inst
 mkdir -p ./ncurses-inst
 mkdir -p ./ncurses-inst/usr/bin
 mkdir -p ./ncurses-inst/usr/sbin
@@ -37,3 +37,5 @@ rm -f ./lib32
 rm -f ./lib64
 sudo find . -type d -empty -delete
 tar pmcfv - . | zstd -22 --ultra > ../ncursesw.tar.zst
+cd ..
+sudo rm -rf ncurses-inst

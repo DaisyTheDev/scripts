@@ -4,7 +4,7 @@ if [ -f "./kwin.tar.zst" ]; then
   exit
 fi
 
-rm -rfd ./kwin-inst
+rm -rf ./kwin-inst
 mkdir -p ./kwin-inst
 mkdir -p ./kwin-inst/usr/bin
 mkdir -p ./kwin-inst/usr/sbin
@@ -40,3 +40,5 @@ rm -f ./lib32
 rm -f ./lib64
 sudo find . -type d -empty -delete
 tar pmcfv - . | zstd -22 --ultra > ../kwin.tar.zst
+cd ..
+sudo rm -rf kwin-inst

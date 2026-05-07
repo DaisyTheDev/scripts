@@ -4,7 +4,7 @@ if [ -f "./git.tar.zst" ]; then
   exit
 fi
 
-rm -rfd ./git-inst
+rm -rf ./git-inst
 mkdir -p ./git-inst
 mkdir -p ./git-inst/usr/bin
 mkdir -p ./git-inst/usr/sbin
@@ -34,3 +34,5 @@ rm -f ./lib32
 rm -f ./lib64
 sudo find . -type d -empty -delete
 tar pmcfv - . | zstd -22 --ultra > ../git.tar.zst
+cd ..
+sudo rm -rf git-inst
