@@ -13,6 +13,7 @@ git_update() {
   }
 
   if [ -z "$SKIP" ]; then
+    local prev_dir=$(realpath .)
     if [ -d "$repo_dir" ]; then
       echo "Existing $repo_name directory found at $repo_dir, checking for updates..."
       cd "$repo_dir"
@@ -51,6 +52,7 @@ git_update() {
       echo "Checking out latest tag: $LATEST_TAG"
       git checkout "$LATEST_TAG"
     fi
+    cd $prev_dir
   fi
 }
 
