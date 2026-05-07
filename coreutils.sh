@@ -17,19 +17,17 @@ ln -s usr/lib ./coreutils-inst/lib
 ln -s usr/lib32 ./coreutils-inst/lib32
 ln -s usr/lib64 ./coreutils-inst/lib64
 
-COREUTILS_DIR="./coreutils"
-
-cd "$COREUTILS_DIR"
+cd coreutils
 
 set -e
 
-make -j$(nproc --all) install PROFILE=release PREFIX=/usr DESTDIR=./coreutils-inst
+sudo make -j$(nproc --all) install PROFILE=release PREFIX=/usr DESTDIR=$(realpath ../coreutils-inst)
 
-cd ./coreutils-inst
+cd ../coreutils-inst
 rm -f ./bin
 rm -f ./sbin
 rm -f ./lib
 rm -f ./lib32
 rm -f ./lib64
-find . -type d -empty -delete
-tar pmcfv - . | zstd -22 --ultra > ./coreutils.tar.zst
+sudo find . -type d -empty -delete
+tar pmcfv - . | zstd -22 --ultra > ../coreutils.tar.zst

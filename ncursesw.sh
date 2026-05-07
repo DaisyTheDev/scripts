@@ -17,26 +17,23 @@ ln -s usr/lib ./ncurses-inst/lib
 ln -s usr/lib32 ./ncurses-inst/lib32
 ln -s usr/lib64 ./ncurses-inst/lib64
 
-NCURSES_DIR="./ncurses"
+cd ncurses
 
-cd "$NCURSES_DIR"
+rm -rf build
+mkdir build
 
 set -e
 
-if [ -d "build" ]; then
-  rm -rfd build
-fi
-mkdir build
 cd build
 CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld CFLAGS="-g0 -O2" CPPFLAGS="-g0 -O2" ../configure --prefix=/usr --enable-widec --with-shared
 make -j$(nproc --all)
-make install DESTDIR=./ncurses-inst
+sudo make install DESTDIR=$(realpath ../../ncurses-inst)
 
-cd ./ncurses-inst
+cd ../../ncurses-inst
 rm -f ./bin
 rm -f ./sbin
 rm -f ./lib
 rm -f ./lib32
 rm -f ./lib64
-find . -type d -empty -delete
-tar pmcfv - . | zstd -22 --ultra > ./ncursesw.tar.zst
+sudo find . -type d -empty -delete
+tar pmcfv - . | zstd -22 --ultra > ../ncursesw.tar.zst

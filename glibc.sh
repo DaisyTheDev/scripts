@@ -17,9 +17,7 @@ ln -s usr/lib ./glibc-inst/lib
 ln -s usr/lib32 ./glibc-inst/lib32
 ln -s usr/lib64 ./glibc-inst/lib64
 
-GLIBC_DIR="./glibc"
-
-cd "$GLIBC_DIR"
+cd glibc
 
 rm -rf build
 mkdir build
@@ -29,14 +27,14 @@ set -e
 
 CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld CFLAGS="-g0 -O2" CPPFLAGS="-g0 -O2" ../configure --prefix=/usr
 make -j$(nproc --all)
-make install DESTDIR=./glibc-inst
+sudo make install DESTDIR=$(realpath ../../glibc-inst)
 
-cd ./glibc-inst
+cd ../../glibc-inst
 rm -f ./bin
 rm -f ./sbin
 rm -f ./lib
 rm -f ./lib32
 rm -f ./lib64
-rm -rf ./usr/share/info
-find . -type d -empty -delete
-tar pmcfv - . | zstd -22 --ultra > ./glibc.tar.zst
+sudo rm -rf ./usr/share/info
+sudo find . -type d -empty -delete
+tar pmcfv - . | zstd -22 --ultra > ../glibc.tar.zst

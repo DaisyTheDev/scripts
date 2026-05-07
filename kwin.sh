@@ -17,9 +17,7 @@ ln -s usr/lib ./kwin-inst/lib
 ln -s usr/lib32 ./kwin-inst/lib32
 ln -s usr/lib64 ./kwin-inst/lib64
 
-KWIN_DIR="./kwin"
-
-cd "$KWIN_DIR"
+cd kwin
 
 set -e
 
@@ -32,13 +30,13 @@ cmake \
   -DBUILD_TESTING=Off
 cd build
 ninja -j$(nproc --all)
-cmake --install . --prefix=./kwin-inst/usr
+sudo cmake --install . --prefix=../../kwin-inst/usr
 
-cd ./kwin-inst
+cd ../../kwin-inst
 rm -f ./bin
 rm -f ./sbin
 rm -f ./lib
 rm -f ./lib32
 rm -f ./lib64
-find . -type d -empty -delete
-tar pmcfv - . | zstd -22 --ultra > ./kwin.tar.zst
+sudo find . -type d -empty -delete
+tar pmcfv - . | zstd -22 --ultra > ../kwin.tar.zst

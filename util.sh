@@ -17,19 +17,20 @@ ln -s usr/lib ./util-inst/lib
 ln -s usr/lib32 ./util-inst/lib32
 ln -s usr/lib64 ./util-inst/lib64
 
+cd util
+
 set -e
 
-cd ./util
 ./autogen.sh
 CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld CFLAGS="-g0 -O2" CPPFLAGS="-g0 -O2" ./configure --disable-kill --disable-more --disable-su
 make -j$(nproc --all)
-make install DESTDIR=./util-inst
+sudo make install DESTDIR=$(realpath ../util-inst)
 
-cd ./util-inst
+cd ../util-inst
 rm -f ./bin
 rm -f ./sbin
 rm -f ./lib
 rm -f ./lib32
 rm -f ./lib64
-find . -type d -empty -delete
-tar pmcfv - . | zstd -22 --ultra > ./util.tar.zst
+sudo find . -type d -empty -delete
+tar pmcfv - . | zstd -22 --ultra > ../util.tar.zst

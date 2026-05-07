@@ -17,22 +17,20 @@ ln -s usr/lib ./git-inst/lib
 ln -s usr/lib32 ./git-inst/lib32
 ln -s usr/lib64 ./git-inst/lib64
 
-GIT_DIR="./git"
-
-cd "$GIT_DIR"
+cd git
 
 set -e
 
 make configure
 CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld CFLAGS="-g0 -O2" CPPFLAGS="-g0 -O2" ./configure --prefix=/usr
 make -j$(nproc --all)
-make install DESTDIR=./git-inst
+sudo make install DESTDIR=$(realpath ../git-inst)
 
-cd ./git-inst
+cd ../git-inst
 rm -f ./bin
 rm -f ./sbin
 rm -f ./lib
 rm -f ./lib32
 rm -f ./lib64
-find . -type d -empty -delete
-tar pmcfv - . | zstd -22 --ultra > ./git.tar.zst
+sudo find . -type d -empty -delete
+tar pmcfv - . | zstd -22 --ultra > ../git.tar.zst

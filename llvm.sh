@@ -17,9 +17,7 @@ ln -s usr/lib ./llvm-inst/lib
 ln -s usr/lib32 ./llvm-inst/lib32
 ln -s usr/lib64 ./llvm-inst/lib64
 
-LLVM_DIR="./llvm"
-
-cd "$LLVM_DIR"
+cd llvm
 
 set -e
 
@@ -42,7 +40,7 @@ if [ ! -f ".stage1_done" ]; then
   cd build
   ninja -j $(( $(nproc --all) / 2 ))
 
-  cmake --build . --target install
+  sudo cmake --build . --target install
 
   cd ..
   rm -rfd build
@@ -77,13 +75,13 @@ cmake \
 cd build
 ninja -j$(nproc --all)
 
-cmake --install . --prefix=./llvm-inst/usr
+sudo cmake --install . --prefix=../../llvm-inst/usr
 
-cd ./llvm-inst
+cd ../../llvm-inst
 rm -f ./bin
 rm -f ./sbin
 rm -f ./lib
 rm -f ./lib32
 rm -f ./lib64
-find . -type d -empty -delete
-tar pmcfv - . | zstd -22 --ultra > ./llvm.tar.zst
+sudo find . -type d -empty -delete
+tar pmcfv - . | zstd -22 --ultra > ../llvm.tar.zst

@@ -17,9 +17,7 @@ ln -s usr/lib ./plasma-inst/lib
 ln -s usr/lib32 ./plasma-inst/lib32
 ln -s usr/lib64 ./plasma-inst/lib64
 
-PLASMA_DIR="./plasma"
-
-cd "$PLASMA_DIR"
+cd plasma
 
 set -e
 
@@ -34,13 +32,13 @@ cmake \
   -DBUILD_TESTING=Off
 cd build
 ninja -j$(nproc --all)
-cmake --install . --prefix=./plasma-inst/usr
+sudo cmake --install . --prefix=../../plasma-inst/usr
 
-cd ./plasma-inst
+cd ../../plasma-inst
 rm -f ./bin
 rm -f ./sbin
 rm -f ./lib
 rm -f ./lib32
 rm -f ./lib64
-find . -type d -empty -delete
-tar pmcfv - . | zstd -22 --ultra > ./plasma.tar.zst
+sudo find . -type d -empty -delete
+tar pmcfv - . | zstd -22 --ultra > ../plasma.tar.zst
