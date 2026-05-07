@@ -1,35 +1,35 @@
 #!/bin/bash
 
-if [ -f "$HOME/coreutils.tar.zst" ]; then
+if [ -f "./coreutils.tar.zst" ]; then
   exit
 fi
 
-rm -rfd $HOME/coreutils-inst
-mkdir -p $HOME/coreutils-inst
-mkdir -p $HOME/coreutils-inst/usr/bin
-mkdir -p $HOME/coreutils-inst/usr/sbin
-mkdir -p $HOME/coreutils-inst/usr/lib
-mkdir -p $HOME/coreutils-inst/usr/lib32
-mkdir -p $HOME/coreutils-inst/usr/lib64
-ln -s usr/bin $HOME/coreutils-inst/bin
-ln -s usr/sbin $HOME/coreutils-inst/sbin
-ln -s usr/lib $HOME/coreutils-inst/lib
-ln -s usr/lib32 $HOME/coreutils-inst/lib32
-ln -s usr/lib64 $HOME/coreutils-inst/lib64
+rm -rfd ./coreutils-inst
+mkdir -p ./coreutils-inst
+mkdir -p ./coreutils-inst/usr/bin
+mkdir -p ./coreutils-inst/usr/sbin
+mkdir -p ./coreutils-inst/usr/lib
+mkdir -p ./coreutils-inst/usr/lib32
+mkdir -p ./coreutils-inst/usr/lib64
+ln -s usr/bin ./coreutils-inst/bin
+ln -s usr/sbin ./coreutils-inst/sbin
+ln -s usr/lib ./coreutils-inst/lib
+ln -s usr/lib32 ./coreutils-inst/lib32
+ln -s usr/lib64 ./coreutils-inst/lib64
 
-COREUTILS_DIR="$HOME/coreutils"
+COREUTILS_DIR="./coreutils"
 
 cd "$COREUTILS_DIR"
 
 set -e
 
-make -j$(nproc --all) install PROFILE=release PREFIX=/usr DESTDIR=$HOME/coreutils-inst
+make -j$(nproc --all) install PROFILE=release PREFIX=/usr DESTDIR=./coreutils-inst
 
-cd $HOME/coreutils-inst
+cd ./coreutils-inst
 rm -f ./bin
 rm -f ./sbin
 rm -f ./lib
 rm -f ./lib32
 rm -f ./lib64
 find . -type d -empty -delete
-tar pmcfv - . | zstd -22 --ultra > $HOME/coreutils.tar.zst
+tar pmcfv - . | zstd -22 --ultra > ./coreutils.tar.zst

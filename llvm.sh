@@ -1,23 +1,23 @@
 #!/bin/bash
 
-if [ -f "$HOME/llvm.tar.zst" ]; then
+if [ -f "./llvm.tar.zst" ]; then
   exit
 fi
 
-rm -rfd $HOME/llvm-inst
-mkdir -p $HOME/llvm-inst
-mkdir -p $HOME/llvm-inst/usr/bin
-mkdir -p $HOME/llvm-inst/usr/sbin
-mkdir -p $HOME/llvm-inst/usr/lib
-mkdir -p $HOME/llvm-inst/usr/lib32
-mkdir -p $HOME/llvm-inst/usr/lib64
-ln -s usr/bin $HOME/llvm-inst/bin
-ln -s usr/sbin $HOME/llvm-inst/sbin
-ln -s usr/lib $HOME/llvm-inst/lib
-ln -s usr/lib32 $HOME/llvm-inst/lib32
-ln -s usr/lib64 $HOME/llvm-inst/lib64
+rm -rfd ./llvm-inst
+mkdir -p ./llvm-inst
+mkdir -p ./llvm-inst/usr/bin
+mkdir -p ./llvm-inst/usr/sbin
+mkdir -p ./llvm-inst/usr/lib
+mkdir -p ./llvm-inst/usr/lib32
+mkdir -p ./llvm-inst/usr/lib64
+ln -s usr/bin ./llvm-inst/bin
+ln -s usr/sbin ./llvm-inst/sbin
+ln -s usr/lib ./llvm-inst/lib
+ln -s usr/lib32 ./llvm-inst/lib32
+ln -s usr/lib64 ./llvm-inst/lib64
 
-LLVM_DIR="$HOME/llvm"
+LLVM_DIR="./llvm"
 
 cd "$LLVM_DIR"
 
@@ -77,13 +77,13 @@ cmake \
 cd build
 ninja -j$(nproc --all)
 
-cmake --install . --prefix=$HOME/llvm-inst/usr
+cmake --install . --prefix=./llvm-inst/usr
 
-cd $HOME/llvm-inst
+cd ./llvm-inst
 rm -f ./bin
 rm -f ./sbin
 rm -f ./lib
 rm -f ./lib32
 rm -f ./lib64
 find . -type d -empty -delete
-tar pmcfv - . | zstd -22 --ultra > $HOME/llvm.tar.zst
+tar pmcfv - . | zstd -22 --ultra > ./llvm.tar.zst

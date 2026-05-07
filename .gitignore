@@ -1,0 +1,13 @@
+bash
+binutils
+btrfs-progs
+coreutils
+git
+glibc
+kwin
+linux
+llvm
+ncurses
+plasma
+sudo
+util

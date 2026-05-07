@@ -1,23 +1,23 @@
 #!/bin/bash
 
-if [ -f "$HOME/kwin.tar.zst" ]; then
+if [ -f "./kwin.tar.zst" ]; then
   exit
 fi
 
-rm -rfd $HOME/kwin-inst
-mkdir -p $HOME/kwin-inst
-mkdir -p $HOME/kwin-inst/usr/bin
-mkdir -p $HOME/kwin-inst/usr/sbin
-mkdir -p $HOME/kwin-inst/usr/lib
-mkdir -p $HOME/kwin-inst/usr/lib32
-mkdir -p $HOME/kwin-inst/usr/lib64
-ln -s usr/bin $HOME/kwin-inst/bin
-ln -s usr/sbin $HOME/kwin-inst/sbin
-ln -s usr/lib $HOME/kwin-inst/lib
-ln -s usr/lib32 $HOME/kwin-inst/lib32
-ln -s usr/lib64 $HOME/kwin-inst/lib64
+rm -rfd ./kwin-inst
+mkdir -p ./kwin-inst
+mkdir -p ./kwin-inst/usr/bin
+mkdir -p ./kwin-inst/usr/sbin
+mkdir -p ./kwin-inst/usr/lib
+mkdir -p ./kwin-inst/usr/lib32
+mkdir -p ./kwin-inst/usr/lib64
+ln -s usr/bin ./kwin-inst/bin
+ln -s usr/sbin ./kwin-inst/sbin
+ln -s usr/lib ./kwin-inst/lib
+ln -s usr/lib32 ./kwin-inst/lib32
+ln -s usr/lib64 ./kwin-inst/lib64
 
-KWIN_DIR="$HOME/kwin"
+KWIN_DIR="./kwin"
 
 cd "$KWIN_DIR"
 
@@ -32,13 +32,13 @@ cmake \
   -DBUILD_TESTING=Off
 cd build
 ninja -j$(nproc --all)
-cmake --install . --prefix=$HOME/kwin-inst/usr
+cmake --install . --prefix=./kwin-inst/usr
 
-cd $HOME/kwin-inst
+cd ./kwin-inst
 rm -f ./bin
 rm -f ./sbin
 rm -f ./lib
 rm -f ./lib32
 rm -f ./lib64
 find . -type d -empty -delete
-tar pmcfv - . | zstd -22 --ultra > $HOME/kwin.tar.zst
+tar pmcfv - . | zstd -22 --ultra > ./kwin.tar.zst

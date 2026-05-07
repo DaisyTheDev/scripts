@@ -1,23 +1,23 @@
 #!/bin/bash
 
-if [ -f "$HOME/plasma.tar.zst" ]; then
+if [ -f "./plasma.tar.zst" ]; then
   exit
 fi
 
-rm -rfd $HOME/plasma-inst
-mkdir -p $HOME/plasma-inst
-mkdir -p $HOME/plasma-inst/usr/bin
-mkdir -p $HOME/plasma-inst/usr/sbin
-mkdir -p $HOME/plasma-inst/usr/lib
-mkdir -p $HOME/plasma-inst/usr/lib32
-mkdir -p $HOME/plasma-inst/usr/lib64
-ln -s usr/bin $HOME/plasma-inst/bin
-ln -s usr/sbin $HOME/plasma-inst/sbin
-ln -s usr/lib $HOME/plasma-inst/lib
-ln -s usr/lib32 $HOME/plasma-inst/lib32
-ln -s usr/lib64 $HOME/plasma-inst/lib64
+rm -rfd ./plasma-inst
+mkdir -p ./plasma-inst
+mkdir -p ./plasma-inst/usr/bin
+mkdir -p ./plasma-inst/usr/sbin
+mkdir -p ./plasma-inst/usr/lib
+mkdir -p ./plasma-inst/usr/lib32
+mkdir -p ./plasma-inst/usr/lib64
+ln -s usr/bin ./plasma-inst/bin
+ln -s usr/sbin ./plasma-inst/sbin
+ln -s usr/lib ./plasma-inst/lib
+ln -s usr/lib32 ./plasma-inst/lib32
+ln -s usr/lib64 ./plasma-inst/lib64
 
-PLASMA_DIR="$HOME/plasma"
+PLASMA_DIR="./plasma"
 
 cd "$PLASMA_DIR"
 
@@ -34,13 +34,13 @@ cmake \
   -DBUILD_TESTING=Off
 cd build
 ninja -j$(nproc --all)
-cmake --install . --prefix=$HOME/plasma-inst/usr
+cmake --install . --prefix=./plasma-inst/usr
 
-cd $HOME/plasma-inst
+cd ./plasma-inst
 rm -f ./bin
 rm -f ./sbin
 rm -f ./lib
 rm -f ./lib32
 rm -f ./lib64
 find . -type d -empty -delete
-tar pmcfv - . | zstd -22 --ultra > $HOME/plasma.tar.zst
+tar pmcfv - . | zstd -22 --ultra > ./plasma.tar.zst

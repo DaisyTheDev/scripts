@@ -1,22 +1,22 @@
 #!/bin/bash
 
-if [ -f "$HOME/su.tar.zst" ]; then
+if [ -f "./su.tar.zst" ]; then
   exit
 fi
 
-rm -rfd $HOME/su-inst
-mkdir -p $HOME/su-inst
-mkdir -p $HOME/su-inst/usr/bin
+rm -rfd ./su-inst
+mkdir -p ./su-inst
+mkdir -p ./su-inst/usr/bin
 
-SUDO_DIR="$HOME/sudo"
+SUDO_DIR="./sudo"
 
 cd "$SUDO_DIR"
 
 set -e
 
 cargo b -r
-cp ./target/release/su $HOME/su-inst/usr/bin/su
-chmod u+s $HOME/su-inst/usr/bin/su
+cp ./target/release/su ./su-inst/usr/bin/su
+chmod u+s ./su-inst/usr/bin/su
 
-cd $HOME/su-inst
-tar pmcfv - . | zstd -22 --ultra > $HOME/su.tar.zst
+cd ./su-inst
+tar pmcfv - . | zstd -22 --ultra > ./su.tar.zst
