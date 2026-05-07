@@ -67,7 +67,6 @@ echo "Updating all repositories..."
 
 update_repo "bash" "https://git.savannah.gnu.org/git/bash.git" '^bash-[0-9]+\.[0-9]+$'
 update_repo "binutils" "git://sourceware.org/git/binutils-gdb.git" '^binutils-[0-9]+_[0-9]+$'
-update_repo "btrfs-progs" "https://github.com/kdave/btrfs-progs" '^v[0-9]+\.[0-9]+$'
 update_repo "coreutils" "https://github.com/uutils/coreutils.git" '^[0-9]+\.[0-9]+\.[0-9]$'
 update_repo "git" "git://git.kernel.org/pub/scm/git/git.git" '^v[0-9]+\.[0-9]+\.[0-9]$'
 update_repo "glibc" "https://sourceware.org/git/glibc.git" '^glibc-[0-9]+\.[0-9]+$'
