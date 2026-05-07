@@ -1,0 +1,1 @@
+This repo contains scripts to build various projects and install them into archive files
