@@ -1,16 +1,18 @@
 #!/bin/bash
 
-source "$(dirname "$(realpath "$0")")/llvm.sh"
-source "$(dirname "$(realpath "$0")")/bash.sh"
-source "$(dirname "$(realpath "$0")")/binutils.sh"
-source "$(dirname "$(realpath "$0")")/coreutils.sh"
-source "$(dirname "$(realpath "$0")")/git.sh"
-source "$(dirname "$(realpath "$0")")/glibc.sh"
-source "$(dirname "$(realpath "$0")")/kwin.sh"
-source "$(dirname "$(realpath "$0")")/linux.sh"
-source "$(dirname "$(realpath "$0")")/llvm.sh"
-source "$(dirname "$(realpath "$0")")/ncursesw.sh"
-source "$(dirname "$(realpath "$0")")/plasma.sh"
-source "$(dirname "$(realpath "$0")")/su.sh"
-source "$(dirname "$(realpath "$0")")/sudo.sh"
-source "$(dirname "$(realpath "$0")")/util.sh"
+set -e
+
+$(dirname "$(realpath "$0")")/llvm.sh
+$(dirname "$(realpath "$0")")/bash.sh
+$(dirname "$(realpath "$0")")/binutils.sh
+$(dirname "$(realpath "$0")")/coreutils.sh
+$(dirname "$(realpath "$0")")/git.sh
+$(dirname "$(realpath "$0")")/glibc.sh
+$(dirname "$(realpath "$0")")/kwin.sh
+$(dirname "$(realpath "$0")")/linux.sh
+$(dirname "$(realpath "$0")")/llvm.sh
+$(dirname "$(realpath "$0")")/ncursesw.sh
+$(dirname "$(realpath "$0")")/plasma.sh
+$(dirname "$(realpath "$0")")/su.sh
+$(dirname "$(realpath "$0")")/sudo.sh
+$(dirname "$(realpath "$0")")/util.sh
