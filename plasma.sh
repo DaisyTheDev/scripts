@@ -4,22 +4,13 @@ if [ -f "./plasma.tar.zst" ]; then
   exit
 fi
 
-rm -rf ./plasma-inst
-mkdir -p ./plasma-inst
-mkdir -p ./plasma-inst/usr/bin
-mkdir -p ./plasma-inst/usr/sbin
-mkdir -p ./plasma-inst/usr/lib
-mkdir -p ./plasma-inst/usr/lib32
-mkdir -p ./plasma-inst/usr/lib64
-ln -s usr/bin ./plasma-inst/bin
-ln -s usr/sbin ./plasma-inst/sbin
-ln -s usr/lib ./plasma-inst/lib
-ln -s usr/lib32 ./plasma-inst/lib32
-ln -s usr/lib64 ./plasma-inst/lib64
-
-cd plasma
+source "$(dirname "$(realpath "$0")")/lib.sh"
 
 set -e
+
+setup_root_tree plasma
+
+cd plasma
 
 cmake \
   -B build \
@@ -32,15 +23,7 @@ cmake \
   -DBUILD_TESTING=Off
 cd build
 ninja -j$(nproc --all)
-sudo cmake --install . --prefix=../../plasma-inst/usr
+cmake --install . --prefix=../../plasma-inst/usr
 
-cd ../../plasma-inst
-rm -f ./bin
-rm -f ./sbin
-rm -f ./lib
-rm -f ./lib32
-rm -f ./lib64
-sudo find . -type d -empty -delete
-tar pmcfv - . | zstd -22 --ultra > ../plasma.tar.zst
-cd ..
-sudo rm -rf plasma-inst
+cd ../..
+package_install plasma

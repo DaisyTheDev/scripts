@@ -4,38 +4,23 @@ if [ -f "./binutils.tar.zst" ]; then
   exit
 fi
 
-rm -rf ./binutils-inst
-mkdir -p ./binutils-inst
-mkdir -p ./binutils-inst/usr/bin
-mkdir -p ./binutils-inst/usr/sbin
-mkdir -p ./binutils-inst/usr/lib
-mkdir -p ./binutils-inst/usr/lib32
-mkdir -p ./binutils-inst/usr/lib64
-ln -s usr/bin ./binutils-inst/bin
-ln -s usr/sbin ./binutils-inst/sbin
-ln -s usr/lib ./binutils-inst/lib
-ln -s usr/lib32 ./binutils-inst/lib32
-ln -s usr/lib64 ./binutils-inst/lib64
-
-cd binutils
-
-rm -rf build
-mkdir build
-cd build
+source "$(dirname "$(realpath "$0")")/lib.sh"
 
 set -e
 
-CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld CXXLD=/usr/local/bin/ld.lld CFLAGS="-g0 -O2" CPPFLAGS="-g0 -O2" LDFLAGS="-latomic" ../configure --prefix=/usr --enable-lto
-make -j$(nproc --all)
-sudo make install DESTDIR=$(realpath ../../binutils-inst)
+setup_root_tree binutils
 
-cd ../../binutils-inst
-rm -f ./bin
-rm -f ./sbin
-rm -f ./lib
-rm -f ./lib32
-rm -f ./lib64
-sudo find . -type d -empty -delete
-tar pmcfv - . | zstd -22 --ultra > ../binutils.tar.zst
-cd ..
-sudo rm -rf binutils-inst
+cd binutils
+
+if [ -d "build" ]; then
+  rm -rf build
+fi
+mkdir build
+cd build
+
+CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld CXXLD=/usr/local/bin/ld.lld LDFLAGS="-latomic" ../configure --prefix=/usr --enable-lto
+make -j$(nproc --all)
+make install tooldir=$(realpath ../../binutils-inst)/usr DESTDIR=$(realpath ../../binutils-inst)
+
+cd ../..
+package_install binutils

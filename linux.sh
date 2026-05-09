@@ -14,9 +14,11 @@ if [ -z "$(which bindgen)" ]; then
   echo "Please install rust-bindgen"
 fi
 
-rm -rf ./linux-inst
-mkdir -p ./linux-inst/boot
-mkdir -p ./linux-inst/lib/modules
+source "$(dirname "$(realpath "$0")")/lib.sh"
+
+set -e
+
+setup_root_tree linux
 
 cd linux
 
@@ -328,9 +330,8 @@ make LLVM=1 LLVM_PREFIX=/usr/local/bin/ olddefconfig
 make LLVM=1 LLVM_PREFIX=/usr/local/bin/ -j$(nproc --all)
 
 make LLVM=1 LLVM_PREFIX=/usr/local/bin/ INSTALL_MOD_PATH=$(realpath ../linux-inst) modules_install
-sudo cp ./arch/x86/boot/bzImage ../linux-inst/boot/vmlinuz
+make LLVM=1 LLVM_PREFIX=/usr/local/bin/ INSTALL_HDR_PATH=$(realpath ../linux-inst/usr) headers_install
+cp ./arch/x86/boot/bzImage ../linux-inst/boot/vmlinuz
 
-cd ../linux-inst
-tar pmcfv - . | zstd -22 --ultra > ../linux.tar.zst
 cd ..
-rm -rf linux-inst
+package_install linux

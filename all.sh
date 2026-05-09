@@ -1,0 +1,16 @@
+#!/bin/bash
+
+source "$(dirname "$(realpath "$0")")/llvm.sh"
+source "$(dirname "$(realpath "$0")")/bash.sh"
+source "$(dirname "$(realpath "$0")")/binutils.sh"
+source "$(dirname "$(realpath "$0")")/coreutils.sh"
+source "$(dirname "$(realpath "$0")")/git.sh"
+source "$(dirname "$(realpath "$0")")/glibc.sh"
+source "$(dirname "$(realpath "$0")")/kwin.sh"
+source "$(dirname "$(realpath "$0")")/linux.sh"
+source "$(dirname "$(realpath "$0")")/llvm.sh"
+source "$(dirname "$(realpath "$0")")/ncursesw.sh"
+source "$(dirname "$(realpath "$0")")/plasma.sh"
+source "$(dirname "$(realpath "$0")")/su.sh"
+source "$(dirname "$(realpath "$0")")/sudo.sh"
+source "$(dirname "$(realpath "$0")")/util.sh"

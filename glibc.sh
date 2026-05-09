@@ -4,39 +4,23 @@ if [ -f "./glibc.tar.zst" ]; then
   exit
 fi
 
-rm -rf ./glibc-inst
-mkdir -p ./glibc-inst
-mkdir -p ./glibc-inst/usr/bin
-mkdir -p ./glibc-inst/usr/sbin
-mkdir -p ./glibc-inst/usr/lib
-mkdir -p ./glibc-inst/usr/lib32
-mkdir -p ./glibc-inst/usr/lib64
-ln -s usr/bin ./glibc-inst/bin
-ln -s usr/sbin ./glibc-inst/sbin
-ln -s usr/lib ./glibc-inst/lib
-ln -s usr/lib32 ./glibc-inst/lib32
-ln -s usr/lib64 ./glibc-inst/lib64
-
-cd glibc
-
-rm -rf build
-mkdir build
-cd build
+source "$(dirname "$(realpath "$0")")/lib.sh"
 
 set -e
 
-CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld CFLAGS="-g0 -O2" CPPFLAGS="-g0 -O2" ../configure --prefix=/usr
-make -j$(nproc --all)
-sudo make install DESTDIR=$(realpath ../../glibc-inst)
+setup_root_tree glibc
 
-cd ../../glibc-inst
-rm -f ./bin
-rm -f ./sbin
-rm -f ./lib
-rm -f ./lib32
-rm -f ./lib64
-sudo rm -rf ./usr/share/info
-sudo find . -type d -empty -delete
-tar pmcfv - . | zstd -22 --ultra > ../glibc.tar.zst
-cd ..
-sudo rm -rf glibc-inst
+cd glibc
+
+if [ -d "build" ]; then
+  rm -rf build
+fi
+mkdir build
+cd build
+
+CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld ../configure --prefix=/usr
+make -j$(nproc --all)
+make install DESTDIR=$(realpath ../../glibc-inst)
+
+cd ../..
+package_install glibc

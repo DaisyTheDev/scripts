@@ -4,19 +4,17 @@ if [ -f "./sudo.tar.zst" ]; then
   exit
 fi
 
-rm -rf ./sudo-inst
-mkdir -p ./sudo-inst
-mkdir -p ./sudo-inst/usr/bin
-
-cd sudo
+source "$(dirname "$(realpath "$0")")/lib.sh"
 
 set -e
 
-cargo b -r
-sudo cp ./target/release/sudo ../sudo-inst/usr/bin/sudo
-sudo chmod u+s ../sudo-inst/usr/bin/sudo
+setup_root_tree sudo
 
-cd ../sudo-inst
-tar pmcfv - . | zstd -22 --ultra > ../sudo.tar.zst
+cd sudo
+
+cargo b -r
+cp ./target/release/sudo ../sudo-inst/usr/bin/sudo
+chmod u+s ../sudo-inst/usr/bin/sudo
+
 cd ..
-sudo rm -rf sudo-inst
+package_install sudo

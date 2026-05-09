@@ -4,22 +4,13 @@ if [ -f "./llvm.tar.zst" ]; then
   exit
 fi
 
-rm -rf ./llvm-inst
-mkdir -p ./llvm-inst
-mkdir -p ./llvm-inst/usr/bin
-mkdir -p ./llvm-inst/usr/sbin
-mkdir -p ./llvm-inst/usr/lib
-mkdir -p ./llvm-inst/usr/lib32
-mkdir -p ./llvm-inst/usr/lib64
-ln -s usr/bin ./llvm-inst/bin
-ln -s usr/sbin ./llvm-inst/sbin
-ln -s usr/lib ./llvm-inst/lib
-ln -s usr/lib32 ./llvm-inst/lib32
-ln -s usr/lib64 ./llvm-inst/lib64
-
-cd llvm
+source "$(dirname "$(realpath "$0")")/lib.sh"
 
 set -e
+
+setup_root_tree llvm
+
+cd llvm
 
 if [ ! -f ".stage1_done" ]; then
   cmake \
@@ -38,9 +29,10 @@ if [ ! -f ".stage1_done" ]; then
     -DLLVM_ENABLE_TELEMETRY=Off
 
   cd build
+  # gcc can be a memory hog at times. use half the cores to half the memory
   ninja -j $(( $(nproc --all) / 2 ))
 
-  sudo cmake --build . --target install
+  cmake --build . --target install
 
   cd ..
   rm -rf build
@@ -75,15 +67,7 @@ cmake \
 cd build
 ninja -j$(nproc --all)
 
-sudo cmake --install . --prefix=../../llvm-inst/usr
+cmake --install . --prefix=../../llvm-inst/usr
 
-cd ../../llvm-inst
-rm -f ./bin
-rm -f ./sbin
-rm -f ./lib
-rm -f ./lib32
-rm -f ./lib64
-sudo find . -type d -empty -delete
-tar pmcfv - . | zstd -22 --ultra > ../llvm.tar.zst
-cd ..
-sudo rm -rf llvm-inst
+cd ../..
+package_install llvm
