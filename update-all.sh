@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$(id -u -r)" -ne "0" ]; then
+  echo "Root is required (Detected updates need to be able to delete files that the builds make)"
+  exit 1
+fi
+
 git_update() {
   local repo_dir="./$REPO_NAME"
   local repo_url="$REPO_URL"
