@@ -21,7 +21,7 @@ glibc-inst
 kwin-inst
 linux-inst
 llvm-inst
-ncurses-inst
+ncursesw-inst
 plasma-inst
 su-inst
 sudo-inst
