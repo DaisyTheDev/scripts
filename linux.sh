@@ -23,7 +23,9 @@ setup_root_tree linux
 cd linux
 
 make LLVM=1 LLVM_PREFIX=/usr/local/bin/ allyesconfig
-./scripts/config -d EXPERT \
+./scripts/config \
+  -d WERROR \
+  -d EXPERT \
   -d LOCALVERSION_AUTO \
   -d KERNEL_GZIP \
   -e KERNEL_ZSTD \
