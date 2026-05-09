@@ -36,7 +36,7 @@ glibc.tar.zst
 kwin.tar.zst
 linux.tar.zst
 llvm.tar.zst
-ncurses.tar.zst
+ncursesw.tar.zst
 plasma.tar.zst
 su.tar.zst
 sudo.tar.zst

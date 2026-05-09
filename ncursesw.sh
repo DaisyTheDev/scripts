@@ -25,7 +25,7 @@ mkdir build
 set -e
 
 cd build
-CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld CFLAGS="-g0 -O2" CPPFLAGS="-g0 -O2" ../configure --prefix=/usr --enable-widec --with-shared
+CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld CFLAGS="-g0 -O2" CPPFLAGS="-g0 -O2" ../configure --prefix=/usr --enable-widec --with-shared --without-debug --without-tests --without-ada
 make -j$(nproc --all)
 sudo make install DESTDIR=$(realpath ../../ncurses-inst)
 
