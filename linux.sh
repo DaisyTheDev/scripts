@@ -6,12 +6,15 @@ fi
 
 if [ ! -f "/usr/local/bin/clang" ]; then
   echo "Please install clang via llvm.sh"
+  exit 1
 fi
 if [ -z "$(which rustc)" ]; then
   echo "Please install rust"
+  exit 1
 fi
 if [ -z "$(which bindgen)" ]; then
   echo "Please install rust-bindgen"
+  exit 1
 fi
 
 source "$(dirname "$(realpath "$0")")/lib.sh"

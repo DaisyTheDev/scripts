@@ -10,12 +10,12 @@ export SCRIPTS_DIR="$(realpath .)"
 cd $HOME
 
 git_update() {
-  local repo_dir="./$REPO_NAME"
-  local repo_url="$REPO_URL"
-  local tag_pattern="$TAG_PATTERN"
-  local git_archive="./$REPO_NAME.git"
-  local output_tar="$SCRIPTS_DIR/$REPO_NAME.tar.zst"
-  local repo_name="$REPO_NAME"
+  local repo_dir="./$1"
+  local repo_url="$2"
+  local tag_pattern="$3"
+  local git_archive="./$1.git"
+  local output_tar="$SCRIPTS_DIR/$1.tar.zst"
+  local repo_name="$1"
 
   get_latest_tag() {
     git tag --sort=-version:refname | grep -E "$tag_pattern" | head -n1
@@ -65,24 +65,18 @@ git_update() {
   fi
 }
 
-update_repo() {
-  export REPO_NAME="$1"
-  export REPO_URL="$2"
-  export TAG_PATTERN="$3"
-  git_update
-}
-
 echo "Updating all repositories..."
 
-update_repo "bash"      "https://git.savannah.gnu.org/git/bash.git"                      '^bash-[0-9]+\.[0-9]+$'
-update_repo "binutils"  "git://sourceware.org/git/binutils-gdb.git"                      '^binutils-[0-9]+_[0-9]+$'
-update_repo "coreutils" "https://github.com/uutils/coreutils.git"                        '^[0-9]+\.[0-9]+\.[0-9]+$'
-update_repo "git"       "git://git.kernel.org/pub/scm/git/git.git"                       '^v[0-9]+\.[0-9]+\.[0-9]+$'
-update_repo "glibc"     "https://sourceware.org/git/glibc.git"                           '^glibc-[0-9]+\.[0-9]+$'
-update_repo "kwin"      "https://github.com/KDE/kwin.git"                                '^v[0-9]+\.[0-9]+\.[0-9]+$'
-update_repo "linux"     "git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git" '^v[0-9]+\.[0-9]+\.[0-9]+$'
-update_repo "llvm"      "https://github.com/llvm/llvm-project.git"                       '^llvmorg-[0-9]+\.[0-9]+\.[0-9]+$'
-update_repo "ncurses"   "https://github.com/mirror/ncurses.git"                          '^v[0-9]+\.[0-9]+$'
-update_repo "plasma"    "https://github.com/KDE/plasma-desktop.git"                      '^v[0-9]+\.[0-9]+\.[0-9]+$'
-update_repo "sudo"      "https://github.com/trifectatechfoundation/sudo-rs.git"          '^v[0-9]+\.[0-9]+\.[0-9]+$'
-update_repo "util"      "https://github.com/util-linux/util-linux.git"                   '^v[0-9]+\.[0-9]+$'
+git_update "bash"       "https://git.savannah.gnu.org/git/bash.git"                      '^bash-[0-9]+\.[0-9]+$'
+git_update "binutils"   "git://sourceware.org/git/binutils-gdb.git"                      '^binutils-[0-9]+_[0-9]+$'
+git_update "coreutils"  "https://github.com/uutils/coreutils.git"                        '^[0-9]+\.[0-9]+\.[0-9]+$'
+git_update "git"        "git://git.kernel.org/pub/scm/git/git.git"                       '^v[0-9]+\.[0-9]+\.[0-9]+$'
+git_update "glibc"      "https://sourceware.org/git/glibc.git"                           '^glibc-[0-9]+\.[0-9]+$'
+git_update "kwin"       "https://github.com/KDE/kwin.git"                                '^v[0-9]+\.[0-9]+\.[0-9]+$'
+git_update "linux"      "git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git" '^v[0-9]+\.[0-9]+\.[0-9]+$'
+git_update "llvm"       "https://github.com/llvm/llvm-project.git"                       '^llvmorg-[0-9]+\.[0-9]+\.[0-9]+$'
+git_update "ncurses"    "https://github.com/mirror/ncurses.git"                          '^v[0-9]+\.[0-9]+$'
+git_update "plasma"     "https://github.com/KDE/plasma-desktop.git"                      '^v[0-9]+\.[0-9]+\.[0-9]+$'
+git_update "sudo"       "https://github.com/trifectatechfoundation/sudo-rs.git"          '^v[0-9]+\.[0-9]+\.[0-9]+$'
+git_update "util"       "https://github.com/util-linux/util-linux.git"                   '^v[0-9]+\.[0-9]+$'
+git_update "shadowutil" "https://github.com/shadow-maint/shadow.git"                     '^v[0-9]+\.[0-9]+(\.[0-9]+)?$'

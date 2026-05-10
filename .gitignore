@@ -1,7 +1,4 @@
 bash.tar.zst
-binutils.tar.zst
-btrfs.tar.zst
-coreutils.tar.zst
 git.tar.zst
 glibc.tar.zst
 kwin.tar.zst
@@ -9,7 +6,6 @@ linux.tar.zst
 llvm.tar.zst
 ncursesw.tar.zst
 plasma.tar.zst
-su.tar.zst
 sudo.tar.zst
 tar.tar.zst
 util.tar.zst
