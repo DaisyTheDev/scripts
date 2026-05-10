@@ -5,6 +5,10 @@ if [ "$(id -u -r)" -ne "0" ]; then
   exit 1
 fi
 
+export SCRIPTS_DIR="$(realpath .)"
+
+cd $HOME
+
 setup_root_tree() {
   local inst_dir="$1-inst"
   if [ -d "$inst_dir" ]; then
@@ -62,7 +66,7 @@ package_install() {
     rm -rf ./usr/share/info
   fi
   find . -type d -empty -delete
-  tar pmcf - . | zstd -22 --ultra > "../$1.tar.zst"
+  tar pmcf - . | zstd -22 --ultra > "$SCRIPTS_DIR/$1.tar.zst"
   cd ..
   rm -rf "$1-inst"
 }

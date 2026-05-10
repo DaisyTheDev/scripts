@@ -5,6 +5,8 @@ if [ "$(id -u -r)" -ne "0" ]; then
   exit 1
 fi
 
+cd $HOME
+
 git_update() {
   local repo_dir="./$REPO_NAME"
   local repo_url="$REPO_URL"
@@ -70,15 +72,15 @@ update_repo() {
 
 echo "Updating all repositories..."
 
-update_repo "bash" "https://git.savannah.gnu.org/git/bash.git" '^bash-[0-9]+\.[0-9]+$'
-update_repo "binutils" "git://sourceware.org/git/binutils-gdb.git" '^binutils-[0-9]+_[0-9]+$'
-update_repo "coreutils" "https://github.com/uutils/coreutils.git" '^[0-9]+\.[0-9]+\.[0-9]$'
-update_repo "git" "git://git.kernel.org/pub/scm/git/git.git" '^v[0-9]+\.[0-9]+\.[0-9]$'
-update_repo "glibc" "https://sourceware.org/git/glibc.git" '^glibc-[0-9]+\.[0-9]+$'
-update_repo "kwin" "https://github.com/KDE/kwin.git" '^v[0-9]+\.[0-9]+\.[0-9]$'
-update_repo "linux" "git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git" '^v[0-9]+\.[0-9]+\.[0-9]+$'
-update_repo "llvm" "https://github.com/llvm/llvm-project.git" '^llvmorg-[0-9]+\.[0-9]+\.[0-9]$'
-update_repo "ncurses" "https://github.com/mirror/ncurses.git" '^v[0-9]+\.[0-9]+$'
-update_repo "plasma" "https://github.com/KDE/plasma-desktop.git" '^v[0-9]+\.[0-9]+\.[0-9]$'
-update_repo "sudo" "https://github.com/trifectatechfoundation/sudo-rs.git" '^v[0-9]+\.[0-9]+\.[0-9]$'
-update_repo "util" "https://github.com/util-linux/util-linux.git" '^v[0-9]+\.[0-9]+$'
+update_repo "bash"      "https://git.savannah.gnu.org/git/bash.git"                      '^bash-[0-9]+\.[0-9]+$'
+update_repo "binutils"  "git://sourceware.org/git/binutils-gdb.git"                      '^binutils-[0-9]+_[0-9]+$'
+update_repo "coreutils" "https://github.com/uutils/coreutils.git"                        '^[0-9]+\.[0-9]+\.[0-9]+$'
+update_repo "git"       "git://git.kernel.org/pub/scm/git/git.git"                       '^v[0-9]+\.[0-9]+\.[0-9]+$'
+update_repo "glibc"     "https://sourceware.org/git/glibc.git"                           '^glibc-[0-9]+\.[0-9]+$'
+update_repo "kwin"      "https://github.com/KDE/kwin.git"                                '^v[0-9]+\.[0-9]+\.[0-9]+$'
+update_repo "linux"     "git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git" '^v[0-9]+\.[0-9]+\.[0-9]+$'
+update_repo "llvm"      "https://github.com/llvm/llvm-project.git"                       '^llvmorg-[0-9]+\.[0-9]+\.[0-9]+$'
+update_repo "ncurses"   "https://github.com/mirror/ncurses.git"                          '^v[0-9]+\.[0-9]+$'
+update_repo "plasma"    "https://github.com/KDE/plasma-desktop.git"                      '^v[0-9]+\.[0-9]+\.[0-9]+$'
+update_repo "sudo"      "https://github.com/trifectatechfoundation/sudo-rs.git"          '^v[0-9]+\.[0-9]+\.[0-9]+$'
+update_repo "util"      "https://github.com/util-linux/util-linux.git"                   '^v[0-9]+\.[0-9]+$'
