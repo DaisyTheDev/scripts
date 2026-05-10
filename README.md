@@ -5,6 +5,5 @@ My end goal with this is to make my own LLVM-based Linux distro from scratch wit
 Feel free to request a project to be included.
 
 ### NOTE
-Files and directories created by this script are located at root's home.
+Files and directories created by these scripts are located at `root`'s home.
 This is because debug info in the resulting binaries will include the directory where the source code is located for a given project.
-You're welcome.
