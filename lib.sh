@@ -69,6 +69,7 @@ package_install() {
   tar pmcf - . | zstd -22 --ultra > "$SCRIPTS_DIR/$1.tar.zst"
   local owner="$(stat -c '%u' "$SCRIPTS_DIR")"
   chown "$owner:$owner" "$SCRIPTS_DIR/$1.tar.zst"
+  rm -f "$SCRIPTS_DIR/$1.tar.zst.old"
   cd ..
   rm -rf "$1-inst"
 }

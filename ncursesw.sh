@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f "./ncursesw.tar.zst" ]; then
+if [ -f "ncursesw.tar.zst" -a ! -f "ncursesw.tar.zst.old" ]; then
   exit
 fi
 

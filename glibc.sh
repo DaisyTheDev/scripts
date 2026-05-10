@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f "./glibc.tar.zst" ]; then
+if [ -f "glibc.tar.zst" -a ! -f "glibc.tar.zst.old" ]; then
   exit
 fi
 

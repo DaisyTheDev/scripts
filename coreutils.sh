@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f "./coreutils.tar.zst" ]; then
+if [ -f "coreutils.tar.zst" -a ! -f "coreutils.tar.zst.old" ]; then
   exit
 fi
 

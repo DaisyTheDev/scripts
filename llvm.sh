@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f "./llvm.tar.zst" ]; then
+if [ -f "llvm.tar.zst" -a ! -f "llvm.tar.zst.old" ]; then
   exit
 fi
 

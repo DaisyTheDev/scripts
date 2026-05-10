@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f "./kwin.tar.zst" ]; then
+if [ -f "kwin.tar.zst" -a ! -f "kwin.tar.zst.old" ]; then
   exit
 fi
 

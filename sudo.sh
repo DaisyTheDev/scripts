@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f "./sudo.tar.zst" ]; then
+if [ -f "sudo.tar.zst" -a ! -f "sudo.tar.zst.old" ]; then
   exit
 fi
 

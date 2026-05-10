@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f "./git.tar.zst" ]; then
+if [ -f "git.tar.zst" -a ! -f "git.tar.zst.old" ]; then
   exit
 fi
 

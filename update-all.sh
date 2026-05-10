@@ -5,6 +5,8 @@ if [ "$(id -u -r)" -ne "0" ]; then
   exit 1
 fi
 
+export SCRIPTS_DIR="$(realpath .)"
+
 cd $HOME
 
 git_update() {
@@ -12,7 +14,7 @@ git_update() {
   local repo_url="$REPO_URL"
   local tag_pattern="$TAG_PATTERN"
   local git_archive="./$REPO_NAME.git"
-  local output_tar="./$REPO_NAME.tar.zst"
+  local output_tar="$SCRIPTS_DIR/$REPO_NAME.tar.zst"
   local repo_name="$REPO_NAME"
 
   get_latest_tag() {
@@ -41,7 +43,7 @@ git_update() {
         git clean -fdx
         git restore .
         git checkout "$LATEST_TAG"
-        rm -f $output_tar
+        mv $output_tar $output_tar.old
       else
         echo "$repo_name is already at the latest tag: $LATEST_TAG"
       fi

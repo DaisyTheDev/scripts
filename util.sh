@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f "./util.tar.zst" ]; then
+if [ -f "util.tar.zst" -a ! -f "util.tar.zst.old" ]; then
   exit
 fi
 

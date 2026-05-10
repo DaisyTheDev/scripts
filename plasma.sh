@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f "./plasma.tar.zst" ]; then
+if [ -f "plasma.tar.zst" -a ! -f "plasma.tar.zst.old" ]; then
   exit
 fi
 

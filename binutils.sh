@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -f "./binutils.tar.zst" ]; then
+if [ -f "binutils.tar.zst" -a ! -f "binutils.tar.zst.old" ]; then
   exit
 fi
 
