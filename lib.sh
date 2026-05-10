@@ -67,6 +67,8 @@ package_install() {
   fi
   find . -type d -empty -delete
   tar pmcf - . | zstd -22 --ultra > "$SCRIPTS_DIR/$1.tar.zst"
+  local owner="$(stat -c '%u' "$SCRIPTS_DIR")"
+  chown "$owner:$owner" "$SCRIPTS_DIR/$1.tar.zst"
   cd ..
   rm -rf "$1-inst"
 }
