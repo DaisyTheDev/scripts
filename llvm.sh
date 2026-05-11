@@ -33,7 +33,7 @@ if [ ! -f ".stage1_done" ]; then
 
   cd build
   # gcc can be a memory hog at times. use half the cores to half the memory
-  ninja -j $(( $(nproc) / 2 ))
+  ninja -j $(( n = $(nproc) / 2, n > 0 ? n : 1 ))
 
   rm -rf ../local
   cmake --build . --target install
