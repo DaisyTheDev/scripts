@@ -12,12 +12,9 @@ setup_root_tree sudo
 
 cd sudo
 
-cargo b -r
-cp ./target/release/sudo ../sudo-inst/usr/bin/sudo
-cp ./target/release/su ../sudo-inst/usr/bin/su
-cp ./target/release/visudo ../sudo-inst/usr/bin/visudo
-chmod u+s ../sudo-inst/usr/bin/sudo
-chmod u+s ../sudo-inst/usr/bin/su
+cargo install --path . --root ../sudo-inst
 
 cd ..
+chmod u+s ./sudo-inst/bin/sudo
+chmod u+s ./sudo-inst/bin/su
 package_install sudo

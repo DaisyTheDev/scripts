@@ -24,6 +24,7 @@ clean linux
 clean llvm
 clean ncurses
 clean plasma
+clean rustup
 clean sudo
 clean util
 clean shadowutil

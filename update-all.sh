@@ -80,3 +80,4 @@ git_update "plasma"     "https://github.com/KDE/plasma-desktop.git"             
 git_update "sudo"       "https://github.com/trifectatechfoundation/sudo-rs.git"          '^v[0-9]+\.[0-9]+\.[0-9]+$'
 git_update "util"       "https://github.com/util-linux/util-linux.git"                   '^v[0-9]+\.[0-9]+$'
 git_update "shadowutil" "https://github.com/shadow-maint/shadow.git"                     '^v[0-9]+\.[0-9]+(\.[0-9]+)?$'
+git_update "rustup"     "https://github.com/rust-lang/rustup.git"                        '^[0-9]+\.[0-9]+\.[0-9]+$'
