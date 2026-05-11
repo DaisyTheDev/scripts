@@ -12,14 +12,16 @@ setup_root_tree ncursesw
 
 cd ncurses
 
+export PATH=$(realpath ../local/bin):$PATH
+
 if [ -d "build" ]; then
   rm -rf build
 fi
 mkdir build
 
 cd build
-CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld ../configure --prefix=/usr --enable-widec --with-shared --without-debug --without-tests --without-ada
-make -j$(nproc --all)
+../configure --prefix=/usr --enable-widec --with-shared --without-debug --without-tests --without-ada
+make -j$(nproc)
 make install DESTDIR=$(realpath ../../ncursesw-inst)
 
 cd ../..

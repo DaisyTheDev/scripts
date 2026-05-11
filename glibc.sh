@@ -12,14 +12,16 @@ setup_root_tree glibc
 
 cd glibc
 
+export PATH=$(realpath ../local/bin):$PATH
+
 if [ -d "build" ]; then
   rm -rf build
 fi
 mkdir build
 cd build
 
-CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld ../configure --prefix=/usr
-make -j$(nproc --all)
+../configure --prefix=/usr
+make -j$(nproc)
 make install DESTDIR=$(realpath ../../glibc-inst)
 
 cd ../..

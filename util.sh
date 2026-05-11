@@ -12,16 +12,18 @@ setup_root_tree util
 
 cd util
 
+export PATH=$(realpath ../local/bin):$PATH
+
 ./autogen.sh
-CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld ./configure --disable-kill --disable-more --disable-su --disable-nologin
-make -j$(nproc --all)
+./configure --disable-kill --disable-more --disable-su --disable-nologin
+make -j$(nproc)
 make install DESTDIR=$(realpath ../util-inst)
 
 cd ../shadowutil
 
 autoreconf -f --install .
-CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld ./configure --prefix=/usr --enable-man --without-su
-make -j$(nproc --all)
+./configure --prefix=/usr --enable-man --without-su
+make -j$(nproc)
 make install DESTDIR=$(realpath ../util-inst)
 
 cd ../binutils
@@ -32,13 +34,13 @@ fi
 mkdir build
 cd build
 
-CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld CXXLD=/usr/local/bin/ld.lld LDFLAGS="-latomic" ../configure --prefix=/usr --enable-lto
-make -j$(nproc --all)
+LDFLAGS="-latomic -Wl,--undefined-version" ../configure --prefix=/usr --enable-lto
+make -j$(nproc)
 make install tooldir=/. DESTDIR=$(realpath ../../util-inst)
 
 cd ../../coreutils
 
-make -j$(nproc --all) install PROFILE=release PREFIX=/usr DESTDIR=$(realpath ../util-inst)
+make -j$(nproc) install PROFILE=release PREFIX=/usr DESTDIR=$(realpath ../util-inst)
 
 cd ..
 

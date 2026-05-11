@@ -12,15 +12,17 @@ setup_root_tree kwin
 
 cd kwin
 
+export PATH=$(realpath ../local/bin):$PATH
+
 cmake \
   -B build \
   -G Ninja \
-  -DCMAKE_C_COMPILER=/usr/local/bin/clang \
-  -DCMAKE_CXX_COMPILER=/usr/local/bin/clang++ \
+  -DCMAKE_C_COMPILER=clang \
+  -DCMAKE_CXX_COMPILER=clang++ \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DBUILD_TESTING=Off
 cd build
-ninja -j$(nproc --all)
+ninja -j$(nproc)
 cmake --install . --prefix=../../kwin-inst/usr
 
 cd ../..

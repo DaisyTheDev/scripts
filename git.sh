@@ -12,9 +12,11 @@ setup_root_tree git
 
 cd git
 
+export PATH=$(realpath ../local/bin):$PATH
+
 make configure
-CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld ./configure --prefix=/usr
-make -j$(nproc --all)
+./configure --prefix=/usr
+make -j$(nproc)
 make install DESTDIR=$(realpath ../git-inst)
 
 cd ..

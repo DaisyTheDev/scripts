@@ -19,7 +19,10 @@ if [ ! -f ".stage1_done" ]; then
     -G Ninja \
     -DLLVM_ENABLE_PROJECTS="clang;lld" \
     -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=$(realpath ../local) \
     -DLLVM_TARGETS_TO_BUILD=X86 \
+    -DLLVM_INSTALL_BINUTILS_SYMLINKS=On \
+    -DLLVM_INSTALL_CCTOOLS_SYMLINKS=On \
     -DLLVM_INCLUDE_EXAMPLES=Off \
     -DLLVM_INCLUDE_TESTS=Off \
     -DLLVM_INCLUDE_BENCHMARKS=Off \
@@ -30,14 +33,17 @@ if [ ! -f ".stage1_done" ]; then
 
   cd build
   # gcc can be a memory hog at times. use half the cores to half the memory
-  ninja -j $(( $(nproc --all) / 2 ))
+  ninja -j $(( $(nproc) / 2 ))
 
+  rm -rf ../local
   cmake --build . --target install
 
   cd ..
   rm -rf build
   touch .stage1_done
 fi
+
+export PATH=$(realpath ../local/bin):$PATH
 
 cmake \
   -S llvm \
@@ -48,9 +54,9 @@ cmake \
   -DCMAKE_BUILD_TYPE=Release \
   -DLLVM_ENABLE_LTO=Full \
   -DCMAKE_INSTALL_PREFIX=/usr \
-  -DLLVM_USE_LINKER=/usr/local/bin/ld.lld \
-  -DCMAKE_C_COMPILER=/usr/local/bin/clang \
-  -DCMAKE_CXX_COMPILER=/usr/local/bin/clang++ \
+  -DLLVM_USE_LINKER=$(which ld.lld) \
+  -DCMAKE_C_COMPILER=clang \
+  -DCMAKE_CXX_COMPILER=clang++ \
   -DLLVM_INSTALL_BINUTILS_SYMLINKS=On \
   -DLLVM_INSTALL_CCTOOLS_SYMLINKS=On \
   -DBUILD_SHARED_LIBS=On \
@@ -65,7 +71,7 @@ cmake \
   -DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=Off
 
 cd build
-ninja -j$(nproc --all)
+ninja -j$(nproc)
 
 cmake --install . --prefix=../../llvm-inst/usr
 

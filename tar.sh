@@ -25,11 +25,14 @@ fi
 
 mkdir -p tar
 cd tar
+
+export PATH=$(realpath ../local/bin):$PATH
+
 tar xf ../tar.tar.xz
 
 cd "$(find . -maxdepth 1 -name 'tar*')"
-CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld ./configure --prefix=/usr
-make -j$(nproc --all)
+FORCE_UNSAFE_CONFIGURE=1 ./configure --prefix=/usr
+make -j$(nproc)
 make install DESTDIR=$(realpath ../../tar-inst)
 
 cd ../..

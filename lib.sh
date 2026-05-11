@@ -6,6 +6,16 @@ if [ "$(id -u -r)" -ne "0" ]; then
 fi
 
 export SCRIPTS_DIR="$(realpath .)"
+export CC="clang"
+export HOSTCC="clang++"
+export CXX="clang++"
+export HOSTCXX="clang++"
+export LD="ld.lld"
+export HOSTLD="ld.lld"
+export CCLD="ld.lld"
+export HOSTCCLD="ld.lld"
+export CXXLD="ld.lld"
+export HOSTCXXLD="ld.lld"
 
 cd $HOME
 
@@ -42,9 +52,7 @@ remove_symlink() {
   if [ -h "$1/$2" ]; then
     rm -f "$1/$2"
   else
-    if [ "$(ls -A "$1/$2")" ]; then
-      mv "$1/$2"/* "$1/usr/$2"/
-    fi
+    cp -a "$1/$2/." "$1/usr/$2/"
     rm -rf "$1/$2"
   fi
 }
@@ -62,11 +70,9 @@ cleanup_root_tree() {
 package_install() {
   cleanup_root_tree "$1"
   cd "$1-inst"
-  if [ -d "./usr/share/info" ]; then
-    rm -rf ./usr/share/info
-  fi
+  rm -rf ./usr/share/info
   find . -type d -empty -delete
-  tar pmcf - . | zstd -22 --ultra > "$SCRIPTS_DIR/$1.tar.zst"
+  tar pmcf - . | zstd -10 > "$SCRIPTS_DIR/$1.tar.zst"
   local owner="$(stat -c '%u' "$SCRIPTS_DIR")"
   chown "$owner:$owner" "$SCRIPTS_DIR/$1.tar.zst"
   rm -f "$SCRIPTS_DIR/$1.tar.zst.old"

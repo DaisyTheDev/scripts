@@ -12,8 +12,10 @@ setup_root_tree bash
 
 cd bash
 
-CC=/usr/local/bin/clang CXX=/usr/local/bin/clang++ LD=/usr/local/bin/ld.lld ./configure --prefix=/usr
-make -j$(nproc --all)
+export PATH=$(realpath ../local/bin):$PATH
+
+./configure --prefix=/usr
+make -j$(nproc)
 make install DESTDIR=$(realpath ../bash-inst)
 
 cd ..
