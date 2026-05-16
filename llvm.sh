@@ -44,7 +44,7 @@ if [ ! -f ".stage1_done" ]; then
     -DLLVM_ENABLE_FFI=On \
     -DCLANG_DEFAULT_LINKER=lld \
     -DCLANG_DEFAULT_RTLIB=compiler-rt \
-    -DCLANG_DEFAULT_UNWINDLIB=libunwind \
+    -DCLANG_DEFAULT_UNWINDLIB=none \
     -DCLANG_LINK_CLANG_DYLIB=On
 
   cd build
@@ -103,7 +103,7 @@ cmake \
   -DLLVM_ENABLE_FFI=On \
   -DCLANG_DEFAULT_LINKER=lld \
   -DCLANG_DEFAULT_RTLIB=compiler-rt \
-  -DCLANG_DEFAULT_UNWINDLIB=libunwind \
+  -DCLANG_DEFAULT_UNWINDLIB=none \
   -DCLANG_LINK_CLANG_DYLIB=On
 
 cd build
