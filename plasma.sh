@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if [ -f "plasma.tar.zst" -a ! -f "plasma.tar.zst.old" ]; then
+source "$(dirname "$(realpath "$0")")/lib.sh"
+
+if [ ! -f "plasma.old" ]; then
   exit
 fi
-
-source "$(dirname "$(realpath "$0")")/lib.sh"
 
 set -e
 
@@ -12,7 +12,7 @@ setup_root_tree plasma
 
 cd plasma
 
-export PATH=$(realpath ../local/bin):$PATH
+export PATH=/usr/lib/ccache/bin:$(realpath ../local/bin):$PATH
 
 cmake \
   -B build \
@@ -29,3 +29,4 @@ cmake --install . --prefix=../../plasma-inst/usr
 
 cd ../..
 package_install plasma
+rm -f plasma.old

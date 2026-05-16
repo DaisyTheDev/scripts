@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if [ -f "sudo.tar.zst" -a ! -f "sudo.tar.zst.old" ]; then
+source "$(dirname "$(realpath "$0")")/lib.sh"
+
+if [ ! -f "sudo.old" ]; then
   exit
 fi
-
-source "$(dirname "$(realpath "$0")")/lib.sh"
 
 set -e
 
@@ -18,3 +18,4 @@ cd ..
 chmod u+s ./sudo-inst/bin/sudo
 chmod u+s ./sudo-inst/bin/su
 package_install sudo
+rm -f sudo.old

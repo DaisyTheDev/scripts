@@ -1,9 +1,5 @@
 #!/bin/bash
 
-if [ -f "linux.tar.zst" -a ! -f "linux.tar.zst.old" ]; then
-  exit
-fi
-
 if [ ! -f "$HOME/local/bin/clang" ]; then
   echo "Please install clang via llvm.sh"
   exit 1
@@ -23,13 +19,17 @@ fi
 
 source "$(dirname "$(realpath "$0")")/lib.sh"
 
+if [ ! -f "linux.old" ]; then
+  exit
+fi
+
 set -e
 
 setup_root_tree linux
 
 cd linux
 
-export PATH=$(realpath ../local/bin):$PATH
+export PATH=/usr/lib/ccache/bin:$(realpath ../local/bin):$PATH
 
 if [ ! -f ".config.done" ]; then
   make LLVM=1 allyesconfig
@@ -350,3 +350,4 @@ cp ./arch/x86/boot/bzImage ../linux-inst/boot/vmlinuz
 
 cd ..
 package_install linux
+rm -f linux.old

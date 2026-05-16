@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if [ -f "kwin.tar.zst" -a ! -f "kwin.tar.zst.old" ]; then
+source "$(dirname "$(realpath "$0")")/lib.sh"
+
+if [ ! -f "kwin.old" ]; then
   exit
 fi
-
-source "$(dirname "$(realpath "$0")")/lib.sh"
 
 set -e
 
@@ -12,7 +12,7 @@ setup_root_tree kwin
 
 cd kwin
 
-export PATH=$(realpath ../local/bin):$PATH
+export PATH=/usr/lib/ccache/bin:$(realpath ../local/bin):$PATH
 
 cmake \
   -B build \
@@ -27,3 +27,4 @@ cmake --install . --prefix=../../kwin-inst/usr
 
 cd ../..
 package_install kwin
+rm -f kwin.old

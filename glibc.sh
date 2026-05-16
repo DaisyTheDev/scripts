@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if [ -f "glibc.tar.zst" -a ! -f "glibc.tar.zst.old" ]; then
+source "$(dirname "$(realpath "$0")")/lib.sh"
+
+if [ ! -f "glibc.old" ]; then
   exit
 fi
-
-source "$(dirname "$(realpath "$0")")/lib.sh"
 
 set -e
 
@@ -12,7 +12,7 @@ setup_root_tree glibc
 
 cd glibc
 
-export PATH=$(realpath ../local/bin):$PATH
+export PATH=/usr/lib/ccache/bin:$(realpath ../local/bin):$PATH
 
 if [ -d "build" ]; then
   rm -rf build
@@ -26,3 +26,4 @@ make install DESTDIR=$(realpath ../../glibc-inst)
 
 cd ../..
 package_install glibc
+rm -f glibc.old

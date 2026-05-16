@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if [ -f "util.tar.zst" -a ! -f "util.tar.zst.old" ]; then
+source "$(dirname "$(realpath "$0")")/lib.sh"
+
+if [ ! -f "util.old" -a ! -f "shadowutil.old" -a ! -f "binutils.old" -a ! -f "coreutils.old" ]; then
   exit
 fi
-
-source "$(dirname "$(realpath "$0")")/lib.sh"
 
 set -e
 
@@ -12,7 +12,7 @@ setup_root_tree util
 
 cd util
 
-export PATH=$(realpath ../local/bin):$PATH
+export PATH=/usr/lib/ccache/bin:$(realpath ../local/bin):$PATH
 
 ./autogen.sh
 ./configure --disable-kill --disable-more --disable-su --disable-nologin
@@ -45,3 +45,4 @@ make -j$(nproc) install PROFILE=release PREFIX=/usr DESTDIR=$(realpath ../util-i
 cd ..
 
 package_install util
+rm -f util.old shadowutil.old binutils.old coreutils.old

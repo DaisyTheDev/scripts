@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if [ -f "rustup.tar.zst" -a ! -f "rustup.tar.zst.old" ]; then
+source "$(dirname "$(realpath "$0")")/lib.sh"
+
+if [ ! -f "rustup.old" ]; then
   exit
 fi
-
-source "$(dirname "$(realpath "$0")")/lib.sh"
 
 set -e
 
@@ -12,9 +12,10 @@ setup_root_tree rustup
 
 cd rustup
 
-export PATH=$(realpath ../local/bin):$PATH
+export PATH=/usr/lib/ccache/bin:$(realpath ../local/bin):$PATH
 
 cargo install --path . --root ../rustup-inst
 
 cd ..
 package_install rustup
+rm -f rustup.old

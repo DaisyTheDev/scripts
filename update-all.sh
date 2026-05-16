@@ -10,10 +10,9 @@ export SCRIPTS_DIR="$(realpath .)"
 cd $HOME
 
 git_update() {
-  local repo_dir="./$1"
+  local repo_dir="$1"
   local repo_url="$2"
   local tag_pattern="$3"
-  local git_archive="./$1.git"
   local output_tar="$SCRIPTS_DIR/$1.tar.zst"
   local repo_name="$1"
 
@@ -43,7 +42,6 @@ git_update() {
         git clean -fdx
         git restore .
         git checkout "$LATEST_TAG"
-        mv $output_tar $output_tar.old
       else
         echo "$repo_name is already at the latest tag: $LATEST_TAG"
       fi
@@ -62,6 +60,7 @@ git_update() {
       git checkout "$LATEST_TAG"
     fi
     cd $prev_dir
+    touch "$repo_dir.old"
   fi
 }
 

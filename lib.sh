@@ -72,10 +72,32 @@ package_install() {
   cd "$1-inst"
   rm -rf ./usr/share/info
   find . -type d -empty -delete
-  tar pmcf - . | zstd -10 > "$SCRIPTS_DIR/$1.tar.zst"
+
+  local entries=(boot etc opt run srv usr var)
+  for entry in $(find . -maxdepth 1); do
+    if [[ "$entry" == "." ]]; then
+      continue
+    fi
+    local keep=0
+    for ent in "${entries[@]}"; do
+      if [[ "$entry" == "./$ent" ]]; then
+        keep=1
+        break
+      fi
+    done
+    if [ "$keep" -ne "1" ]; then
+      rm -rf "$entry"
+    fi
+  done
+
+  if [ ! -d "$SCRIPTS_DIR/out" ]; then
+    mkdir "$SCRIPTS_DIR/out"
+  fi
+  find . -type f -exec sha256sum {} + > "$SCRIPTS_DIR/out/$1.sha256"
+  tar pmcf - . | zstd -10 > "$SCRIPTS_DIR/out/$1.tar.zst"
   local owner="$(stat -c '%u' "$SCRIPTS_DIR")"
-  chown "$owner:$owner" "$SCRIPTS_DIR/$1.tar.zst"
-  rm -f "$SCRIPTS_DIR/$1.tar.zst.old"
+  chown "$owner:$owner" "$SCRIPTS_DIR/out/$1.sha256"
+  chown "$owner:$owner" "$SCRIPTS_DIR/out/$1.tar.zst"
   cd ..
   rm -rf "$1-inst"
 }

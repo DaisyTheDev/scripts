@@ -1,9 +1,5 @@
 #!/bin/bash
 
-if [ -f "tar.tar.zst" -a ! -f "tar.tar.zst.old" ]; then
-  exit
-fi
-
 source "$(dirname "$(realpath "$0")")/lib.sh"
 
 set -e
@@ -14,7 +10,7 @@ if [ ! -f "tar.tar.xz" ]; then
   curl --output tar.tar.xz https://ftp.gnu.org/gnu/tar/tar-1.35.tar.xz
 fi
 
-if [ ! -f tar.tar.xz ]; then
+if [ ! -f "tar.tar.xz" ]; then
   echo "Error: failed to download tar.tar.xz" >&2
   exit 1
 fi
@@ -26,7 +22,7 @@ fi
 mkdir -p tar
 cd tar
 
-export PATH=$(realpath ../local/bin):$PATH
+export PATH=/usr/lib/ccache/bin:$(realpath ../local/bin):$PATH
 
 tar xf ../tar.tar.xz
 

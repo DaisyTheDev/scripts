@@ -1,10 +1,10 @@
 #!/bin/bash
 
-if [ -f "ncursesw.tar.zst" -a ! -f "ncursesw.tar.zst.old" ]; then
+source "$(dirname "$(realpath "$0")")/lib.sh"
+
+if [ ! -f "ncurses.old" ]; then
   exit
 fi
-
-source "$(dirname "$(realpath "$0")")/lib.sh"
 
 set -e
 
@@ -12,7 +12,7 @@ setup_root_tree ncursesw
 
 cd ncurses
 
-export PATH=$(realpath ../local/bin):$PATH
+export PATH=/usr/lib/ccache/bin:$(realpath ../local/bin):$PATH
 
 if [ -d "build" ]; then
   rm -rf build
@@ -26,3 +26,4 @@ make install DESTDIR=$(realpath ../../ncursesw-inst)
 
 cd ../..
 package_install ncursesw
+rm -f ncurses.old
